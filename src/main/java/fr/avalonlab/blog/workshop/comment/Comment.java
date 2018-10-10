@@ -1,4 +1,4 @@
-package info.lefoll.jeff.polymer.workshop.comment;
+package fr.avalonlab.blog.workshop.comment;
 
 
 import lombok.Data;

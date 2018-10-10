@@ -1,4 +1,4 @@
-package info.lefoll.jeff.polymer.workshop.blogpost;
+package fr.avalonlab.blog.workshop.blogpost;
 
 import lombok.Data;
 import org.jongo.marshall.jackson.oid.MongoObjectId;
