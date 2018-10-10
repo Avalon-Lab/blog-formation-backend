@@ -1,4 +1,4 @@
-package info.lefoll.jeff.polymer.workshop.blogpost;
+package fr.avalonlab.blog.workshop.comment;
 
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -17,17 +17,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import static org.jongo.Oid.withOid;
-
 @Singleton
-public class BlogPostRepository {
+public class CommentRepository {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private Jongo jongo;
 
     @Inject
-    public BlogPostRepository(@Named("dbName") String dbName, MongoClient mongoClient) {
+    public CommentRepository(@Named("dbName") String dbName, MongoClient mongoClient) {
         DB mongoDb = mongoClient.getDB(dbName);
 
         jongo = new Jongo(mongoDb,
@@ -38,31 +36,23 @@ public class BlogPostRepository {
     }
 
     private MongoCollection getCollection() {
-        return  jongo.getCollection("blogposts");
+        return  jongo.getCollection("comments");
     }
 
-    public List<BlogPost> findAll() {
-        MongoCursor<BlogPost> result = getCollection().find().as(BlogPost.class);
+    public List<Comment> findAll(String blogId) {
+        MongoCursor<Comment> result = getCollection().find("{blogId: #}", blogId).as(Comment.class);
 
-        return List.ofAll(result);
+        return List.ofAll(result::iterator);
     }
 
-
-    public BlogPost findById(String id) {
+    public Comment findById(String id) {
         ObjectId query = new ObjectId(id);
 
-        return getCollection().findOne(query).as(BlogPost.class);
+        return getCollection().findOne(query).as(Comment.class);
     }
 
-    public BlogPost create(BlogPost entity) {
+    public Comment create(Comment entity) {
         getCollection().save(entity);
-
-        return entity;
-    }
-
-    public BlogPost update(BlogPost entity) {
-
-        getCollection().update(withOid(entity.get_id())).with(entity);
 
         return entity;
     }
@@ -71,15 +61,5 @@ public class BlogPostRepository {
         ObjectId query = new ObjectId(id);
 
         getCollection().remove(query);
-    }
-
-    public void removeAll(){
-        getCollection().drop();
-    }
-
-    public List<BlogPost> find(String field, String param) {
-        MongoCursor<BlogPost> result = getCollection().find("{" + field +": #}", param).as(BlogPost.class);
-
-        return List.ofAll(result);
     }
 }
