@@ -17,8 +17,11 @@ import org.jooby.mongodb.Mongodb;
 import java.time.LocalDateTime;
 
 public class App extends Jooby {
+    
+    private final static String PATH_BLOGPOST = "/api/blogpost";
 
     {
+
         use(new Jackson().doWith(mapper ->
                 mapper.registerModule(new ParameterNamesModule())
                         .registerModule(new Jdk8Module())
@@ -31,55 +34,53 @@ public class App extends Jooby {
 
         get("/", () -> "I'm alive !!");
 
-        // Path /api/blogpost
-        get("/api/blogpost", req -> {
+        get(PATH_BLOGPOST, req -> {
             List<BlogPost> result = require(BlogPostRepository.class).findAll();
 
             return result.asJava();
         });
 
-        post("/api/blogpost", req -> {
+        post(PATH_BLOGPOST, req -> {
             BlogPost blogPost = req.body(BlogPost.class);
             blogPost.setCreationDate(LocalDateTime.now());
 
             return require(BlogPostRepository.class).create(blogPost);
         });
 
-        put("/api/blogpost", req -> {
+        put(PATH_BLOGPOST, req -> {
             BlogPost blogPost = req.body(BlogPost.class);
             blogPost.setUpdateDate(LocalDateTime.now());
 
             return require(BlogPostRepository.class).update(blogPost);
         });
 
-        get("/api/blogpost/:id", req -> require(BlogPostRepository.class).findById(req.param("id").value()));
+        get(PATH_BLOGPOST + "/:id", req -> require(BlogPostRepository.class).findById(req.param("id").value()));
 
-        delete("/api/blogpost/:id", req -> {
+        delete(PATH_BLOGPOST + "/:id", req -> {
             require(BlogPostRepository.class).removeById(req.param("id").value());
 
             return Results.ok();
         });
 
-        delete("/api/blogpost", req -> {
+        delete(PATH_BLOGPOST, req -> {
             require(BlogPostRepository.class).removeAll();
 
             return Results.ok();
         });
 
-        get("/api/blogpost/autor/:name", req -> {
+        get(PATH_BLOGPOST + "/autor/:name", req -> {
             List<BlogPost> result = require(BlogPostRepository.class).find("autor", req.param("name").value());
 
             return result;
         });
 
-        // Path /api/blogpost/:blogId/comment
-        get("/api/blogpost/:blogId/comment", req -> {
+        get(PATH_BLOGPOST + "/:blogId/comment", req -> {
             List<Comment> result = require(CommentRepository.class).findAll(req.param("blogId").value());
 
             return result.asJava();
         });
 
-        post("/api/blogpost/:blogId/comment", req -> {
+        post(PATH_BLOGPOST + "/:blogId/comment", req -> {
             Comment comment = req.body(Comment.class);
             comment.setBlogId(req.param("blogId").value());
             comment.setCreationDate(LocalDateTime.now());
@@ -87,9 +88,9 @@ public class App extends Jooby {
             return require(CommentRepository.class).create(comment);
         });
 
-        get("/api/blogpost/:blogId/comment/:id", req -> require(CommentRepository.class).findById(req.param("id").value()));
+        get(PATH_BLOGPOST + "/:blogId/comment/:id", req -> require(CommentRepository.class).findById(req.param("id").value()));
 
-        delete("/api/blogpost/:blogId/comment", req -> {
+        delete(PATH_BLOGPOST + "/:blogId/comment", req -> {
             require(CommentRepository.class).removeById(req.param("id").value());
 
             return Results.ok();
