@@ -16,5 +16,5 @@ public class BlogPost {
     private String article;
     private LocalDateTime creationDate;
     private LocalDateTime updateDate;
-    private String autor;
+    private String author;
 }

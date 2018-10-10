@@ -15,5 +15,5 @@ public class Comment {
     private String blogId;
     private String message;
     private LocalDateTime creationDate;
-    private String autor;
+    private String author;
 }

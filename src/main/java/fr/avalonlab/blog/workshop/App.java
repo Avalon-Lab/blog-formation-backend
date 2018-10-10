@@ -68,8 +68,8 @@ public class App extends Jooby {
             return Results.ok();
         });
 
-        get(PATH_BLOGPOST + "/autor/:name", req -> {
-            List<BlogPost> result = require(BlogPostRepository.class).find("autor", req.param("name").value());
+        get(PATH_BLOGPOST + "/author/:name", req -> {
+            List<BlogPost> result = require(BlogPostRepository.class).find("author", req.param("name").value());
 
             return result;
         });
