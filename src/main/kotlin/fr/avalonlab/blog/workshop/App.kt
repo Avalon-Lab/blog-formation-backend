@@ -61,36 +61,36 @@ class App: Kooby({
       require(BlogPostRepository::class).update(blogPost)
     }
 
-    get("/:id") {
+    get("/{id}") {
       logger().info { "Retrieve BlogPost ${ctx.path("id")}" }
       require(BlogPostRepository::class).findById(ctx.path("id").value())!!
     }
 
-    delete("/:id") {
+    delete("/{id}") {
       logger().info { "Delete BlogPost ${ctx.path("id")}" }
       require(BlogPostRepository::class).removeById(ctx.path("id").value())
       StatusCode.NO_CONTENT
     }
 
-    delete(PATH_BLOGPOST) {
+    delete("/") {
       logger().info { "Delete all BlogPosts" }
       require(BlogPostRepository::class).removeAll()
       StatusCode.NO_CONTENT
     }
 
-    get("/author/:name") {
+    get("/author/{name}") {
       logger().info { "Retrieve author's ${ctx.path("name")} BlogPosts" }
       val result: List<BlogPost> = require(BlogPostRepository::class).find("author", ctx.path("name").value())
       result
     }
 
-    get("/:blogId/comment") {
+    get("/{blogId}/comment") {
       logger().info { "Retrieve comments of BlogPost ${ctx.path("blogId")}" }
       val result: List<Comment> = require(CommentRepository::class).findAll(ctx.path("blogId").value())
       result
     }
 
-    post("/:blogId/comment") {
+    post("/{blogId}/comment") {
       logger().info { "Add comment to BlogPost ${ctx.path("blogId")}" }
       val comment = ctx.body<Comment>()
       comment.blogId = ctx.path("blogId").value()
@@ -98,12 +98,12 @@ class App: Kooby({
       require(CommentRepository::class).create(comment)
     }
 
-    get("/:blogId/comment/:id") {
+    get("/{blogId}/comment/{id}") {
       logger().info { "Retrieve comment ${ctx.path("id")}" }
       require(CommentRepository::class).findById(ctx.path("id").value())!!
     }
 
-    delete("/:blogId/comment/:id") {
+    delete("/{blogId}/comment/{id}") {
       logger().info { "Delete Comment ${ctx.path("id")}" }
       require(CommentRepository::class).removeById(ctx.path("id").value())
       StatusCode.NO_CONTENT
