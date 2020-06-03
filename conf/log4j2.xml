@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+  <Appenders>
+    <Console name="stdout">
+      <PatternLayout
+        pattern="date:%d fishtag:%X{fishTag} thread:%t level:%-5level className:%c{1} message:%msg%n%throwable"/>
+    </Console>
+  </Appenders>
+  <Loggers>
+    <Root additivity="true" level="DEBUG">
+      <AppenderRef ref="stdout"/>
+    </Root>
+  </Loggers>
+</Configuration>

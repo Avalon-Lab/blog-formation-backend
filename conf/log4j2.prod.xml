@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="stdout">
+            <JSONLayout compact="true" eventEol="true" properties="true" stacktraceAsString="true"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root additivity="true" level="INFO">
+            <AppenderRef ref="stdout"/>
+        </Root>
+    </Loggers>
+</Configuration>
