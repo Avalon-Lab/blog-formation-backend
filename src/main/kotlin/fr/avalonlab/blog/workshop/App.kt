@@ -15,6 +15,8 @@ import io.jooby.json.JacksonModule
 import org.apache.logging.log4j.ThreadContext
 import org.apache.logging.log4j.kotlin.logger
 import java.time.LocalDateTime
+import java.time.OffsetDateTime
+import java.time.ZoneOffset
 
 
 private const val PATH_BLOGPOST = "/api/blogpost"
@@ -50,14 +52,14 @@ class App: Kooby({
     post("/") {
       logger().info { "Add a new BlogPost" }
       val blogPost = ctx.body<BlogPost>()
-      blogPost.creationDate = LocalDateTime.now()
+      blogPost.creationDate = OffsetDateTime.now(ZoneOffset.UTC).toString()
       require(BlogPostRepository::class).create(blogPost)
     }
 
     put("/") {
       logger().info { "Update a BlogPost" }
       val blogPost = ctx.body<BlogPost>()
-      blogPost.updateDate = LocalDateTime.now()
+      blogPost.updateDate = OffsetDateTime.now(ZoneOffset.UTC).toString()
       require(BlogPostRepository::class).update(blogPost)
     }
 
@@ -94,7 +96,7 @@ class App: Kooby({
       logger().info { "Add comment to BlogPost ${ctx.path("blogId")}" }
       val comment = ctx.body<Comment>()
       comment.blogId = ctx.path("blogId").value()
-      comment.creationDate = LocalDateTime.now()
+      comment.creationDate = OffsetDateTime.now(ZoneOffset.UTC).toString()
       require(CommentRepository::class).create(comment)
     }
 

@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 data class BlogPost(val _id: String?,
                     val title: String,
                     val article: String,
-                    var creationDate: LocalDateTime?,
-                    var updateDate: LocalDateTime?,
+                    var creationDate: String?,
+                    var updateDate: String?,
                     val author: String
 )
