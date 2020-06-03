@@ -1,7 +1,5 @@
 package fr.avalonlab.blog.workshop
 
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -28,6 +26,11 @@ class App: Kooby({
   require(ObjectMapper::class.java).registerModule(JavaTimeModule())
   install(OpenAPIModule())
   install(GuiceModule())
+
+  val cors = cors {
+    methods = listOf("GET", "POST", "PUT", "DELETE")
+  }
+  decorator(CorsHandler(cors))
 
   before {
     val fishTagGenerator = PermutationBasedHumanReadableIdGenerator()
