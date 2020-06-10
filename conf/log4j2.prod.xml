@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Appenders>
-        <Console name="stdout">
+        <Console name="LogToConsole" target="SYSTEM_OUT">
             <EcsLayout serviceName="blog-formation"/>
         </Console>
     </Appenders>
     <Loggers>
-        <Root additivity="true" level="INFO">
-            <AppenderRef ref="stdout"/>
+        <Root level="info">
+            <AppenderRef ref="LogToConsole"/>
         </Root>
     </Loggers>
 </Configuration>

@@ -34,10 +34,6 @@ class App: Kooby({
   }
   decorator(CorsHandler(cors))
 
-  before {
-    val fishTagGenerator = PermutationBasedHumanReadableIdGenerator()
-    ThreadContext.put("fishTag", fishTagGenerator.generate())
-  }
 
   get("/") { "I'm alive !!" }
 
@@ -112,7 +108,6 @@ class App: Kooby({
     }
   }
 
-  after { ThreadContext.clearAll() }
 })
 
 
