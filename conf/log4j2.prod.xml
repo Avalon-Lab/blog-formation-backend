@@ -2,7 +2,7 @@
 <Configuration>
     <Appenders>
         <Console name="LogToConsole" target="SYSTEM_OUT">
-            <EcsLayout serviceName="blog-formation"/>
+            <JSONLayout compact="true" eventEol="true" properties="true" stacktraceAsString="true"/>
         </Console>
     </Appenders>
     <Loggers>
