@@ -1,0 +1,2 @@
+enable_log_correlation=true
+application_packages="fr.avalonlab.blog.workshop"
