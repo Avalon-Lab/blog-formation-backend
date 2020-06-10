@@ -48,6 +48,13 @@
       <version>${jooby.version}</version>
     </dependency>
 
+    <!-- APM -->
+    <dependency>
+      <groupId>co.elastic.apm</groupId>
+      <artifactId>apm-agent-attach</artifactId>
+      <version>1.16.0</version>
+    </dependency>
+
     <!-- logging  -->
     <dependency>
       <artifactId>log4j-slf4j-impl</artifactId>

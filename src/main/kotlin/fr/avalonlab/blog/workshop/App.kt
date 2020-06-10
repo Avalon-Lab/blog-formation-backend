@@ -1,5 +1,6 @@
 package fr.avalonlab.blog.workshop
 
+import co.elastic.apm.attach.ElasticApmAttacher
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -14,7 +15,6 @@ import io.jooby.di.GuiceModule
 import io.jooby.json.JacksonModule
 import org.apache.logging.log4j.ThreadContext
 import org.apache.logging.log4j.kotlin.logger
-import java.time.LocalDateTime
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
 
@@ -118,5 +118,6 @@ class App: Kooby({
 
 
 fun main(args: Array<String>) {
+  ElasticApmAttacher.attach()
   runApp(args, App::class)
 }
