@@ -2,7 +2,8 @@
 <Configuration>
     <Appenders>
         <Console name="stdout">
-            <JSONLayout compact="true" eventEol="true" properties="true" stacktraceAsString="true"/>
+            <PatternLayout
+                    pattern="date:%d fishtag:%X{fishTag} thread:%t level:%-5level className:%c{1} message:%msg%n%throwable"/>
         </Console>
     </Appenders>
     <Loggers>
