@@ -10,14 +10,14 @@ import java.time.ZoneOffset
 @Path("/api/blogpost")
 class BlogPostController @Inject constructor(private val blogPostRepository: BlogPostRepository) {
 
-    @GET("/")
+    @GET
     @CaptureTransaction
     fun getAllBlogPosts() : List<BlogPost> {
         logger().info { "Get all BlogPost" }
         return blogPostRepository.findAll()
     }
 
-    @POST("/")
+    @POST
     @CaptureTransaction
     fun addBlogPost(blogPost: BlogPost) {
         logger().info { "Add a new BlogPost" }
@@ -25,7 +25,7 @@ class BlogPostController @Inject constructor(private val blogPostRepository: Blo
         blogPostRepository.create(blogPost)
     }
 
-    @PUT("/")
+    @PUT
     @CaptureTransaction
     fun updateBlogPost(blogPost: BlogPost) {
         logger().info { "Update a BlogPost" }
@@ -33,7 +33,7 @@ class BlogPostController @Inject constructor(private val blogPostRepository: Blo
         blogPostRepository.update(blogPost)
     }
 
-    @DELETE("/")
+    @DELETE
     @CaptureTransaction
     fun deleteAllBlogPosts() {
         logger().info { "Delete all BlogPosts" }
