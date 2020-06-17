@@ -19,18 +19,18 @@ class BlogPostRepository @Inject constructor (@Named("db") db: String, @Named("d
 
     private fun getCollection() = database.getCollection<BlogPost>(BLOGPOSTS)
 
-    @CaptureSpan
+    @CaptureSpan(type = "db", subtype="mongo", action="query")
     fun findAll(): List<BlogPost> {
         val result = getCollection().find()
         return result.toList()
     }
 
-    @CaptureSpan
+    @CaptureSpan(type = "db", subtype="mongo", action="query")
     fun findById(id: String): BlogPost? {
         return getCollection().findOneById(id)
     }
 
-    @CaptureSpan
+    @CaptureSpan(type = "db", subtype="mongo", action="write")
     fun create(entity: BlogPost): BlogPost {
         getCollection().insertOne(entity)
         return entity
@@ -41,6 +41,7 @@ class BlogPostRepository @Inject constructor (@Named("db") db: String, @Named("d
         return entity
     }
 
+    @CaptureSpan(type = "db", subtype="mongo", action="delete")
     fun removeById(id: String) {
         //val query = ObjectId(id)
         getCollection().deleteOneById(id)
