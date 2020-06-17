@@ -5,15 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.paramnames.ParameterNamesModule
-import com.github.kkuegler.PermutationBasedHumanReadableIdGenerator
 import fr.avalonlab.blog.workshop.blogpost.BlogPost
+import fr.avalonlab.blog.workshop.blogpost.BlogPostController
 import fr.avalonlab.blog.workshop.blogpost.BlogPostRepository
 import fr.avalonlab.blog.workshop.comment.Comment
 import fr.avalonlab.blog.workshop.comment.CommentRepository
 import io.jooby.*
 import io.jooby.di.GuiceModule
 import io.jooby.json.JacksonModule
-import org.apache.logging.log4j.ThreadContext
 import org.apache.logging.log4j.kotlin.logger
 import java.time.OffsetDateTime
 import java.time.ZoneOffset
@@ -37,52 +36,11 @@ class App: Kooby({
 
   get("/") { "I'm alive !!" }
 
-  path(PATH_BLOGPOST) {
+  mvc(BlogPostController::class)
 
-    get("/") {
-      logger().info { "Get all BlogPosts" }
-      val result: List<BlogPost> = require(BlogPostRepository::class).findAll()
-      result
-    }
+  /* path(PATH_BLOGPOST) {
 
-    post("/") {
-      logger().info { "Add a new BlogPost" }
-      val blogPost = ctx.body<BlogPost>()
-      blogPost.creationDate = OffsetDateTime.now(ZoneOffset.UTC).toString()
-      require(BlogPostRepository::class).create(blogPost)
-    }
-
-    put("/") {
-      logger().info { "Update a BlogPost" }
-      val blogPost = ctx.body<BlogPost>()
-      blogPost.updateDate = OffsetDateTime.now(ZoneOffset.UTC).toString()
-      require(BlogPostRepository::class).update(blogPost)
-    }
-
-    get("/{id}") {
-      logger().info { "Retrieve BlogPost ${ctx.path("id")}" }
-      require(BlogPostRepository::class).findById(ctx.path("id").value())!!
-    }
-
-    delete("/{id}") {
-      logger().info { "Delete BlogPost ${ctx.path("id")}" }
-      require(BlogPostRepository::class).removeById(ctx.path("id").value())
-      StatusCode.NO_CONTENT
-    }
-
-    delete("/") {
-      logger().info { "Delete all BlogPosts" }
-      require(BlogPostRepository::class).removeAll()
-      StatusCode.NO_CONTENT
-    }
-
-    get("/author/{name}") {
-      logger().info { "Retrieve author's ${ctx.path("name")} BlogPosts" }
-      val result: List<BlogPost> = require(BlogPostRepository::class).find("author", ctx.path("name").value())
-      result
-    }
-
-    get("/{blogId}/comment") {
+   get("/{blogId}/comment") {
       logger().info { "Retrieve comments of BlogPost ${ctx.path("blogId")}" }
       val result: List<Comment> = require(CommentRepository::class).findAll(ctx.path("blogId").value())
       result
@@ -106,7 +64,7 @@ class App: Kooby({
       require(CommentRepository::class).removeById(ctx.path("id").value())
       StatusCode.NO_CONTENT
     }
-  }
+  }*/
 
 })
 
