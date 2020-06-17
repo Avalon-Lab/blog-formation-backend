@@ -1,5 +1,6 @@
 package fr.avalonlab.blog.workshop.blogpost
 
+import co.elastic.apm.api.CaptureSpan
 import com.mongodb.ConnectionString
 import com.mongodb.client.MongoDatabase
 import org.litote.kmongo.*
@@ -18,15 +19,18 @@ class BlogPostRepository @Inject constructor (@Named("db") db: String, @Named("d
 
     private fun getCollection() = database.getCollection<BlogPost>(BLOGPOSTS)
 
+    @CaptureSpan
     fun findAll(): List<BlogPost> {
         val result = getCollection().find()
         return result.toList()
     }
 
+    @CaptureSpan
     fun findById(id: String): BlogPost? {
         return getCollection().findOneById(id)
     }
 
+    @CaptureSpan
     fun create(entity: BlogPost): BlogPost {
         getCollection().insertOne(entity)
         return entity
