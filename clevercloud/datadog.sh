@@ -9,7 +9,8 @@ tar -xzvf ${APP_HOME}/datadog/datadog-agent.tar.gz -C ${APP_HOME}/datadog/
 mv ${APP_HOME}/datadog/dist/dev ${APP_HOME}/datadog/
 mv ${APP_HOME}/datadog/dist/agent ${APP_HOME}/datadog/
 
-LD_LIBRARY_PATH=$LD_LIBRARY_PATH/${APP_HOME}/datadog/dev/lib
+echo "LD_LIBRARY " $LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/${APP_HOME}/datadog/dev/lib
 
 chmod +x ${APP_HOME}/datadog/agent
 
